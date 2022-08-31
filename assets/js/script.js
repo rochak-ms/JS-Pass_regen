@@ -6,9 +6,10 @@ var specialChar = [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+//Initialize an empty array for the newPassword being generated.
+var newPassword = [];
 //define generatePassword function
 function generatePassword(){
-
   //Taking user input
   var userInput = prompt("How many characters do you need for the password? (Please choose Min 8 to Max 128)");
   //defining variable to check password crieteria
@@ -26,14 +27,59 @@ while (inputLength < 8 || inputLength > 128) {
   return
 }
 
+//Initialize an empty array for the possible character arrays based on the user's response.
+var characterTypeArray = [];
 
  //Confirm which character types will be needed in the password. 
+ //Push 1 character from the respective character type array to the newPassword array.
 var confirmLowerCase = confirm("Do you need at least one Lower case character?");
+if (confirmLowerCase) {      
+  //Select a random character from the lowercaseLetters array and push it to the newPassword array.
+  var randomLower = lowercase_Letters[Math.floor(Math.random() * lowercase_Letters.length)];
+  newPassword.push(randomLower);
+  //Add lowercaseLetters array to the characterTypeArray
+  characterTypeArray.push(lowercase_Letters);
+}
+
 var confirmUpperCase = confirm("Do you need at least one Upper case character?");
-var confirmNumbers = confirm("Do you need at least one numerical character?");
+if (confirmUpperCase) {
+  var randomUpper = uppercase_Letters[Math.floor(Math.random() * uppercase_Letters.length)];
+  newPassword.push(randomUpper);
+  characterTypeArray.push(uppercase_Letters);
+}
+
+var confirmNumericals = confirm("Do you need at least one numerical character?");
+if (confirmNumericals) {
+  var randomNumerical = num[Math.floor(Math.random() * num.length)];
+  newPassword.push(randomNumerical);
+  characterTypeArray.push(num);
+}
+
 var confirmSpecial = confirm("Do you need at least one special character?");
+if (confirmSpecial) {
+  var randomSpecial = specialChar[Math.floor(Math.random() * specialChar.length)];
+  newPassword.push(randomSpecial);
+  characterTypeArray.push(specialChar);
+}
 
+  //Loop once for the generation of each character up to the exact character length chosen by the user.
+  for (var i = newPassword.length; i < inputLength; i++) {
 
+  //Select one random array within characterTypeArray and then one random character from that array.
+  //Push random character to the end of the newPassword array.
+  var randomCharacterTypeArray = characterTypeArray[Math.floor(Math.random() * characterTypeArray.length)];
+  var randomCharacter = randomCharacterTypeArray[Math.floor(Math.random() * randomCharacterTypeArray.length)];
+  newPassword.push(randomCharacter);
+
+  //Repeat this loop until the length of the newPassword array matches the user's specifications inputLength.
+  }
+
+//Shuffle the characters within the newPassword array to avoid formulaic passwords.
+newPassword = newPassword.sort(() => Math.random() - 0.5)
+
+//display generated password on Html page
+var password = newPassword.join().replace(/,/g,"");
+return password;
 }
 
 // Write password to the #password input
