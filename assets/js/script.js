@@ -8,12 +8,15 @@ var generateBtn = document.querySelector("#generate");
 
 //Initialize an empty array for the newPassword being generated.
 var newPassword = [];
+
 //define generatePassword function
 function generatePassword(){
-  //Taking user input
-  var userInput = prompt("How many characters do you need for the password? (Please choose Min 8 to Max 128)");
-  //defining variable to check password crieteria
-  var inputLength = parseInt(userInput);
+
+//Taking user input
+var userInput = prompt("How many characters do you need for the password? (Please choose Min 8 to Max 128)");
+  
+//defining variable to check password crieteria
+var inputLength = parseInt(userInput);
 
 if (isNaN(userInput)){
   alert("This not a number");
